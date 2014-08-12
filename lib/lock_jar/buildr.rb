@@ -118,7 +118,7 @@ module Buildr
               if project.lockjar_dsl && !File.exists?( Buildr.project_to_lockfile(project) )
                 raise "#{Buildr.project_to_lockfile(project)} does not exist, run #{project.name}:lockjar:lock first"
               end
-              jars = ::LockJar.list( Buildr.project_to_lockfile(project), ['test'] )
+              jars = ::LockJar.list( Buildr.project_to_lockfile(project), ['default','test'] )
               
               project.test.compile.with( jars )
               project.test.with( jars )
@@ -131,7 +131,7 @@ module Buildr
               jars = ::LockJar.list( Buildr.project_to_lockfile(project), ['default'] )
               project.compile.with( jars )
               
-              jars = ::LockJar.list( Buildr.project_to_lockfile(project), ['test'] )
+              jars = ::LockJar.list( Buildr.project_to_lockfile(project), ['default','test'] )
               project.test.compile.with( jars )
             end
         end
