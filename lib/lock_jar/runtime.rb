@@ -64,6 +64,11 @@ module LockJar
       lockfile.remote_repositories.each do |repo|
           resolver(opts).add_remote_repository( repo )
       end
+
+      # If not set in opts, and is set in  dsl
+      if opts[:local_repo].nil? && jarfile.local_repository
+        opts[:local_repo] = jarfile.local_repository
+      end
       
       files = resolver(opts).download( deps )
       
