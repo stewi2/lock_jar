@@ -38,11 +38,7 @@ module LockJar
       # XXX: Caches the resolver by the options. Passing in nil opts will replay
       #      from the cache. This need to change.
       
-      unless opts.nil?
-        if opts[:local_repo]
-          opts[:local_repo] = File.expand_path(opts[:local_repo])
-        end
-      else
+      if opts.nil?
         if @current_resolver
           opts = @current_resolver.opts
         else
@@ -61,6 +57,10 @@ module LockJar
       deps = list( jarfile_lock, groups, {:with_locals => false}.merge( opts ), &blk )
       
       lockfile = LockJar::Domain::Lockfile.read( jarfile_lock )
+      if opts[:local_repo].nil? && lockfile.local_repository
+        opts[:local_repo] = lockfile.local_repository
+      end
+      
       lockfile.remote_repositories.each do |repo|
           resolver(opts).add_remote_repository( repo )
       end
