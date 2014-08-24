@@ -27,7 +27,7 @@ module LockJar
     def initialize( opts = {} )
 
       @opts = opts
-      local_repo = opts[:local_repo] ? File.expand_path(opts[:local_repo]) : Naether::Bootstrap.default_local_repo
+      local_repo = opts[:local_repo] || Naether::Bootstrap.default_local_repo
         
       # Bootstrap Naether
       Naether::Bootstrap.bootstrap_local_repo( local_repo, opts )
